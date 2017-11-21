@@ -1,5 +1,6 @@
-package at.technikumwien;
+package at.technikumwien.sksue.entities;
 
+import java.io.*;
 import java.util.*;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.*;
@@ -11,22 +12,21 @@ import static javax.persistence.TemporalType.DATE;
 @Entity
 @Table(name = "actors")
 @SuppressWarnings("Serialize")
-public class Actor {
+public class Actor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private int id;
-
-    @Column(name = "firstname")
     private String firstName;
-    @Column(name = "lastname")
     private String lastName;
-    @Column(name = "birthday")
+
     @Temporal(DATE)
     private Date birthday;
-    @ManyToMany
-    private List<Movie> movies;
 
+    @ManyToMany(mappedBy = "actorList")
+    private List<Movie> movieList;
+
+    //<editor-fold defaultstate="collapsed" desc="Getter/Setter">
     public int getId() {
         return id;
     }
@@ -58,5 +58,14 @@ public class Actor {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
+    public List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
+    //</editor-fold>
 
 }
