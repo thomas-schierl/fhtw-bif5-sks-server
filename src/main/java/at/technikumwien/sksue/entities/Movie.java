@@ -1,13 +1,12 @@
 package at.technikumwien.sksue.entities;
 
 import at.technikumwien.sksue.enums.*;
-import java.io.*;
-import java.sql.*;
-import java.time.*;
 import java.util.*;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.*;
+import static javax.xml.bind.annotation.XmlAccessType.FIELD;
+import javax.xml.bind.annotation.*;
 
 /**
  * @author Link
@@ -15,29 +14,56 @@ import javax.persistence.*;
 @Entity
 @Table(name = "movies")
 @SuppressWarnings("Serialize")
-public class Movie implements Serializable {
+@XmlRootElement
+@XmlAccessorType(FIELD)
+public class Movie {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @XmlTransient
     private int id;
+
+    @XmlAttribute(required = true)
+    @Column(nullable = false)
     private String title;
+    @XmlAttribute(required = false)
+    @Column(length = 1023)
     private String description;
-    private Year releaseYear;
-    private Time movieLength;
-
-    @ManyToOne
-    @JoinColumn
-    private Studio studio;
-
+    @XmlAttribute(name = "releaseyear", required = false)
+    private int releaseYear;
+    @XmlAttribute(required = true)
+    @Column(nullable = false)
+    private int movieLength;
+    @XmlAttribute(required = true)
+    @Column(nullable = false)
     @Enumerated(STRING)
     private Genre genre;
 
-    @ManyToMany
+    @ManyToOne(optional = false)
+    @JoinColumn
+    private Studio studio;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             joinColumns = @JoinColumn(referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id")
     )
+    @XmlElementWrapper(name = "actors")
+    @XmlElement(name = "actor")
     private List<Actor> actorList;
+
+    public Movie() {
+    }
+
+    public Movie(String title, String description, int releaseYear, int movieLength, Studio studio, Genre genre, List<Actor> actorList) {
+        this.title = title;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.movieLength = movieLength;
+        this.studio = studio;
+        this.genre = genre;
+        this.actorList = actorList;
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Getter/Setter">
     public int getId() {
@@ -64,19 +90,19 @@ public class Movie implements Serializable {
         this.description = description;
     }
 
-    public Year getReleaseYear() {
+    public int getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(Year releaseYear) {
+    public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public Time getMovieLength() {
+    public int getMovieLength() {
         return movieLength;
     }
 
-    public void setMovieLength(Time movieLength) {
+    public void setMovieLength(int movieLength) {
         this.movieLength = movieLength;
     }
 

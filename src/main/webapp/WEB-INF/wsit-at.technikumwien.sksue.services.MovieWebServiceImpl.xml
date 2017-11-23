@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="MovieWebService" targetNamespace="http://services.sksue.technikumwien.at/" xmlns:tns="http://services.sksue.technikumwien.at/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp1="http://www.w3.org/ns/ws-policy" xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service" xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service" xmlns:wsat="http://schemas.xmlsoap.org/ws/2004/10/wsat"
+>
+    <message name="SearchByTitle"/>
+    <message name="SearchByTitleResponse"/>
+    <message name="AddMovie"/>
+    <message name="AddMovieResponse"/>
+    <portType name="MovieWebServiceImpl">
+        <operation name="SearchByTitle">
+            <input message="tns:SearchByTitle"/>
+            <output message="tns:SearchByTitleResponse"/>
+        </operation>
+        <operation name="AddMovie">
+            <input message="tns:AddMovie"/>
+            <output message="tns:AddMovieResponse"/>
+        </operation>
+    </portType>
+    <binding name="MovieWebServicePortBinding" type="tns:MovieWebServiceImpl">
+        <wsp:PolicyReference URI="#MovieWebServicePortBindingPolicy"/>
+        <operation name="SearchByTitle">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="AddMovie">
+            <input/>
+            <output/>
+        </operation>
+    </binding>
+    <service name="MovieWebService">
+        <port name="MovieWebServicePort" binding="tns:MovieWebServicePortBinding"/>
+    </service>
+    <wsp:Policy wsu:Id="MovieWebServicePortBindingPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</definitions>

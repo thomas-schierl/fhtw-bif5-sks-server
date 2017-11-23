@@ -1,9 +1,10 @@
 package at.technikumwien.sksue.entities;
 
-import java.io.*;
 import java.util.*;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.*;
+import static javax.xml.bind.annotation.XmlAccessType.FIELD;
+import javax.xml.bind.annotation.*;
 
 /**
  * @author Link
@@ -11,16 +12,33 @@ import javax.persistence.*;
 @Entity
 @Table(name = "studios")
 @SuppressWarnings("Serialize")
-public class Studio implements Serializable {
-
+@XmlAccessorType(FIELD)
+public class Studio {
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @XmlTransient
     private int id;
+    @XmlAttribute(required = true)
+    @Column(nullable = false)
     private String name;
+    @XmlAttribute(name = "countrycode", required = false)
     private String countryCode;
+    @XmlAttribute(name = "postcode", required = false)
     private String postCode;
+
     @OneToMany(mappedBy = "studio")
+    @XmlTransient
     private List<Movie> movieList;
+
+    public Studio() {
+    }
+
+    public Studio(String name, String countryCode, String postCode, List<Movie> movieList) {
+        this.name = name;
+        this.countryCode = countryCode;
+        this.postCode = postCode;
+        this.movieList = movieList;
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Getter/Setter">
     public int getId() {

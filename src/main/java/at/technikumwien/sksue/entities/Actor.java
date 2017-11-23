@@ -1,10 +1,13 @@
 package at.technikumwien.sksue.entities;
 
-import java.io.*;
+import at.technikumwien.sksue.enums.*;
 import java.util.*;
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.*;
 import static javax.persistence.TemporalType.DATE;
+import static javax.xml.bind.annotation.XmlAccessType.FIELD;
+import javax.xml.bind.annotation.*;
 
 /**
  * @author Link
@@ -12,19 +15,39 @@ import static javax.persistence.TemporalType.DATE;
 @Entity
 @Table(name = "actors")
 @SuppressWarnings("Serialize")
-public class Actor implements Serializable {
-
+@XmlAccessorType(FIELD)
+public class Actor {
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @XmlTransient
     private int id;
+    @XmlAttribute(name = "firstname", required = true)
+    @Column(nullable = false)
     private String firstName;
+    @XmlAttribute(name = "lastname", required = true)
+    @Column(nullable = false)
     private String lastName;
+    @XmlAttribute(required = false)
+    @Enumerated(STRING)
+    private Sex sex;
 
     @Temporal(DATE)
-    private Date birthday;
+    @XmlAttribute(required = false)
+    private Date birthdate;
 
     @ManyToMany(mappedBy = "actorList")
+    @XmlTransient
     private List<Movie> movieList;
+
+    public Actor() {
+    }
+
+    public Actor(String firstName, String lastName, Date birthday, List<Movie> movieList) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthday;
+        this.movieList = movieList;
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Getter/Setter">
     public int getId() {
@@ -51,12 +74,20 @@ public class Actor implements Serializable {
         this.lastName = lastName;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public Sex getSex() {
+        return sex;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     public List<Movie> getMovieList() {
@@ -67,5 +98,4 @@ public class Actor implements Serializable {
         this.movieList = movieList;
     }
     //</editor-fold>
-
 }
