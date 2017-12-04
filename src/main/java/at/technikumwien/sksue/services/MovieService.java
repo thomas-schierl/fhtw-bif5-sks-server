@@ -15,6 +15,18 @@ public class MovieService {
     private EntityManager entityManager;
 
     public List<Movie> getMoviesContainingTitle(String containedByTitle) {
-        return entityManager.createQuery("SELECT m FROM Movie m WHERE m.title LIKE '%" + containedByTitle + "%'", Movie.class).getResultList();
+        Query query = entityManager.createNamedQuery("Movie.findByPartOfName");
+        query.setParameter("part", containedByTitle);
+        return query.getResultList();
+    }
+
+    public List<Actor> getAllActors() {
+        Query query = entityManager.createNamedQuery("Actor.getAll");
+        return query.getResultList();
+    }
+
+    public List<Studio> getAllStudios() {
+        Query query = entityManager.createNamedQuery("Studio.getAll");
+        return query.getResultList();
     }
 }

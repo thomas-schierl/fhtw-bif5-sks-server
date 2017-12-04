@@ -1,5 +1,6 @@
 package at.technikumwien.sksue.entities;
 
+import java.io.*;
 import java.util.*;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.*;
@@ -11,9 +12,12 @@ import javax.xml.bind.annotation.*;
  */
 @Entity
 @Table(name = "studios")
-@SuppressWarnings("Serialize")
+@NamedQueries({
+    @NamedQuery(name = "Studio.findByName", query = "SELECT s FROM Studio s WHERE s.name = :name")
+    ,@NamedQuery(name = "Studio.getAll", query = "SELECT s FROM Studio s")})
 @XmlAccessorType(FIELD)
-public class Studio {
+public class Studio implements Serializable {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @XmlTransient
@@ -38,6 +42,13 @@ public class Studio {
         this.countryCode = countryCode;
         this.postCode = postCode;
         this.movieList = movieList;
+    }
+
+    public void initialise(Studio newStudio) {
+        setName(newStudio.getName());
+        setCountryCode(newStudio.getCountryCode());
+        setPostCode(newStudio.getPostCode());
+        setMovieList(newStudio.getMovieList());
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getter/Setter">

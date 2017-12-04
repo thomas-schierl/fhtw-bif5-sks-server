@@ -1,6 +1,7 @@
 package at.technikumwien.sksue.entities;
 
 import at.technikumwien.sksue.enums.*;
+import java.io.*;
 import java.util.*;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -13,10 +14,10 @@ import javax.xml.bind.annotation.*;
  */
 @Entity
 @Table(name = "movies")
-@SuppressWarnings("Serialize")
 @XmlRootElement
 @XmlAccessorType(FIELD)
-public class Movie {
+@NamedQuery(name = "Movie.findByPartOfName", query = "SELECT m FROM Movie m WHERE m.title LIKE '%:part%'")
+public class Movie implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -1,6 +1,7 @@
 package at.technikumwien.sksue.entities;
 
 import at.technikumwien.sksue.enums.*;
+import java.io.*;
 import java.util.*;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -14,9 +15,12 @@ import javax.xml.bind.annotation.*;
  */
 @Entity
 @Table(name = "actors")
-@SuppressWarnings("Serialize")
 @XmlAccessorType(FIELD)
-public class Actor {
+@NamedQueries({
+    @NamedQuery(name = "Actor.findByName", query = "SELECT a FROM Actor a WHERE a.firstName = :firstname AND a.lastName = :lastname")
+    ,@NamedQuery(name = "Actor.getAll", query = "SELECT a FROM Actor a")})
+public class Actor implements Serializable {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @XmlTransient
@@ -32,6 +36,7 @@ public class Actor {
     private Sex sex;
 
     @Temporal(DATE)
+    @XmlSchemaType(name = "date")
     @XmlAttribute(required = false)
     private Date birthdate;
 
@@ -42,11 +47,20 @@ public class Actor {
     public Actor() {
     }
 
-    public Actor(String firstName, String lastName, Date birthday, List<Movie> movieList) {
+    public Actor(String firstName, String lastName, Sex sex, Date birthdate, List<Movie> movieList) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = birthday;
+        this.sex = sex;
+        this.birthdate = birthdate;
         this.movieList = movieList;
+    }
+
+    public void initialise(Actor newActor) {
+        setFirstName(newActor.getFirstName());
+        setLastName(newActor.getLastName());
+        setSex(newActor.getSex());
+        setBirthdate(newActor.getBirthdate());
+        setMovieList(newActor.getMovieList());
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getter/Setter">

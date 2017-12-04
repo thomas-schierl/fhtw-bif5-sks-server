@@ -1,7 +1,6 @@
 package at.technikumwien.sksue.services;
 
 import at.technikumwien.sksue.entities.*;
-import at.technikumwien.sksue.enums.*;
 import java.util.*;
 import javax.jws.*;
 
@@ -11,9 +10,10 @@ import javax.jws.*;
 @WebService
 public interface MovieWebService {
 
+    @WebMethod()
     List<Movie> SearchByTitle(@WebParam(name = "containedByTitle") String containedByTitle);
 
-    @WebMethod()
+/*    @WebMethod()
     boolean AddMovieByParameters(
             @WebParam(name = "title") String title,
             @WebParam(name = "desc") String description,
@@ -25,7 +25,7 @@ public interface MovieWebService {
 
     @WebMethod()
     boolean AddMovieViaJaxb(@WebParam(name = "xml") String xml) throws Exception;
-
+*/
     @WebMethod()
-    boolean AddMovie(@WebParam(name = "movie") Movie movie) throws Exception;
+    boolean AddMovies(@WebParam(name = "movie") List<Movie> movieList) throws Exception;
 }

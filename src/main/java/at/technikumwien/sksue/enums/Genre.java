@@ -11,5 +11,5 @@ public enum Genre {
     HORROR,
     SCIENCE_FICTION,
     THRILLER,
-    WESTERN
+    WESTERN;
 }
