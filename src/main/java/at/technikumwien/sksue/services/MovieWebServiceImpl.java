@@ -10,6 +10,7 @@ import javax.inject.*;
 import javax.jws.*;
 import javax.persistence.*;
 import javax.transaction.*;
+import org.jboss.ejb3.annotation.*;
 
 /**
  * @author Link
@@ -17,6 +18,7 @@ import javax.transaction.*;
 @WebService(endpointInterface = "at.technikumwien.sksue.services.MovieWebService",
         serviceName = "MovieWebService",
         portName = "MovieWebServicePort")
+@SecurityDomain("SksueSD")
 public class MovieWebServiceImpl implements MovieWebService {
 
     @PersistenceContext

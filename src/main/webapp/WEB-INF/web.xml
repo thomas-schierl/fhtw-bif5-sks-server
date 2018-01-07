@@ -16,4 +16,37 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+    </login-config>
+
+    <security-role>
+        <role-name>MSWrite</role-name>
+    </security-role>
+    <security-role>
+        <role-name>MSRead</role-name>
+    </security-role>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>SKS Übung Briebauer/Schierl</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method-omission>OPTIONS,GET</http-method-omission>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>MSRead</role-name>
+            <role-name>MSWrite</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>SKS Übung Briebauer/Schierl</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method-omission>PUT,POST,DELETE</http-method-omission>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>MSWrite</role-name>
+        </auth-constraint>
+    </security-constraint>
 </web-app>

@@ -2,13 +2,17 @@ package at.technikumwien.sksue.services;
 
 import at.technikumwien.sksue.entities.*;
 import java.util.*;
+import javax.annotation.security.*;
 import javax.ejb.*;
 import javax.persistence.*;
+import org.jboss.ejb3.annotation.*;
 
 /**
  * @author Link
  */
 @Stateless
+@SecurityDomain("SksueSD")
+@RolesAllowed("MSWrite")
 public class MovieService {
 
     @PersistenceContext

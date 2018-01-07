@@ -23,7 +23,7 @@ public class Actor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @XmlTransient
+    @XmlAttribute(required = false)
     private int id;
     @XmlAttribute(name = "firstname", required = true)
     @Column(nullable = false)

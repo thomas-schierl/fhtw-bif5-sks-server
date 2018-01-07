@@ -2,6 +2,7 @@ package at.technikumwien.sksue.services;
 
 import at.technikumwien.sksue.entities.*;
 import java.util.*;
+import javax.annotation.security.*;
 import javax.inject.*;
 import javax.persistence.*;
 import javax.transaction.*;
@@ -27,6 +28,7 @@ public class StudioResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed("MSRead")
     public List<Studio> getAll() {
         return movieService.getAllStudios();
     }

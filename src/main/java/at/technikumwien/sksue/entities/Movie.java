@@ -21,7 +21,7 @@ public class Movie implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @XmlTransient
+    @XmlAttribute(required = false)
     private int id;
 
     @XmlAttribute(required = true)

@@ -20,7 +20,7 @@ public class Studio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @XmlTransient
+    @XmlAttribute(required = false)
     private int id;
     @XmlAttribute(required = true)
     @Column(nullable = false)
